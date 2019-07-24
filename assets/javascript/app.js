@@ -130,5 +130,10 @@ $(document).ready(function () {
         // console.log("timer clicked!");
     })
 
+    $("div.answers div").on("click", (event) => {
+        _this = $(this);
+        
+    });
+
     console.log("There should be somehting here");
 });
