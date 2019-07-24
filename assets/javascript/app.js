@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         buildanswerDOM: function () {
             if ($("div.answers div").length < 1) {
-                for (i = 0; i < this.triviaLength; i++) {
+                for (i = 0; i < triviaLength; i++) {
                     // let imageUrl = "./assets/images/truffle" + i + ".png";
                     let answer = $("<div>");
                     answer
