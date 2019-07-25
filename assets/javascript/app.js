@@ -29,16 +29,19 @@ $(document).ready(function () {
             if ($("div.answers div").length < 1) {
                 for (i = 0; i < triviaLength; i++) {
                     // let imageUrl = "./assets/images/truffle" + i + ".png";
-                    let answer = $("<div>");
+                    // let answer = $("<div>");
+                    let answer = $("div.answer" + i);
                     answer
-                        .attr("class", "col-12 my-1 answer" + i)
+                        // .attr("type", "button")
+                        // .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
                         // .attr("value", i)
-                        .css({
-                            'color': '#ffffff',
-                            'background': '#000000',
-                        });
-                    answer.text("text");
-                    $("div.answers").append(answer);
+                        // .css({
+                        //     'color': '#ffffff',
+                        //     'background': '#000000',
+                        // });
+                        // .css("display", "block");/
+                    // answer.text("Presss Start");
+                    // $("div.answers").append(answer);
                 }
             }
 
@@ -52,7 +55,7 @@ $(document).ready(function () {
 
             currentAnswerSet.push(triviaData[currentQuestion].correct_answer);
 
-            console.log(currentAnswerSet);
+            console.log(`current answer set: ${currentAnswerSet}`);
 
             currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
 
@@ -133,13 +136,17 @@ $(document).ready(function () {
         // console.log("timer clicked!");
     })
 
-    $("div.answers div").on("click", function(event) {
+    $("div.answers div").on("click", function (event) {
         $this = $(this);
         console.log($this);
 
-        // if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
-        //     console.log("This is the correct answer");
-        // }
+        if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
+            console.log("This is the correct answer");
+        }
 
     });
+
+    // $("div.btn").on("click", (event) => {
+    //     console.log("button clicked");
+    // });
 });
