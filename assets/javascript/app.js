@@ -4,6 +4,7 @@ $(document).ready(function () {
     let triviaData;
     let triviaLength;
     let currentQuestion = 2;
+    let currentAnswerSet;
 
     $.getJSON("https://opentdb.com/api.php?amount=10&category=20&type=multiple", function (data) {
         triviaData = data.results;
@@ -47,18 +48,20 @@ $(document).ready(function () {
         assignDOMData: function () {
             $question = $("div.currentQuestion");
 
-            let $tempAnswers = triviaData[currentQuestion].incorrect_answers;
+            let currentAnswerSet = triviaData[currentQuestion].incorrect_answers;
 
-            $tempAnswers.push(triviaData[currentQuestion].correct_answer);
+            currentAnswerSet.push(triviaData[currentQuestion].correct_answer);
 
-            console.log($tempAnswers);
+            console.log(currentAnswerSet);
 
-            $tempAnswers = $tempAnswers.sort( () => { return 0.5 - Math.random() });
+            currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
 
-            console.log($tempAnswers);
+            console.log(currentAnswerSet);
 
-            for(let i = 0; i < triviaLength; i++) {
-                $("div.answer" + i).text($tempAnswers[i]);
+            for (let i = 0; i < triviaLength; i++) {
+                let $current = $("div.answer" + i);
+                $current.text(currentAnswerSet[i]);
+                $current.attr("value", currentAnswerSet[i]);
             }
 
             $question.text(triviaData[currentQuestion].question);
@@ -75,7 +78,7 @@ $(document).ready(function () {
     let time = 5;
 
     function start() {
-        if(time <= 0) {
+        if (time <= 0) {
             stop();
             return;
         }
@@ -121,8 +124,8 @@ $(document).ready(function () {
     }
 
     $("div.timer").on("click", function (event) {
-        
-        if(!timer.intervalId) {
+
+        if (!timer.intervalId) {
             start();
         }
 
@@ -130,10 +133,13 @@ $(document).ready(function () {
         // console.log("timer clicked!");
     })
 
-    $("div.answers div").on("click", (event) => {
-        _this = $(this);
-        
-    });
+    $("div.answers div").on("click", function(event) {
+        $this = $(this);
+        console.log($this);
 
-    console.log("There should be somehting here");
+        // if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
+        //     console.log("This is the correct answer");
+        // }
+
+    });
 });
