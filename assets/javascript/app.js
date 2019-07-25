@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     let triviaData;
     let triviaLength;
-    let currentQuestion = 2;
+    let currentQuestion = 0;
     let currentAnswerSet;
 
     $.getJSON("https://opentdb.com/api.php?amount=10&category=20&type=multiple", function (data) {
@@ -19,6 +19,7 @@ $(document).ready(function () {
 
         answersDOM: $("div.answers"),
         incorrectAnswersDOM: $("div.incorrectAnswers"),
+        timerDOM: $("div.timer"),
 
 
         currentQuestion: 0,
@@ -68,6 +69,11 @@ $(document).ready(function () {
             }
 
             $question.text(triviaData[currentQuestion].question);
+        },
+
+        incorrectFeedback: function () {
+            this.timerDOM.text(`Incorrect Answer! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
+            currentQuestion++;
         }
     }
 
@@ -83,6 +89,7 @@ $(document).ready(function () {
     function start() {
         if (time <= 0) {
             stop();
+            game.incorrectAnswers++;
             return;
         }
         count();
@@ -119,9 +126,9 @@ $(document).ready(function () {
             minutes = "0" + minutes;
         }
 
-        if (minutes === 0 && seconds === 0) {
-            stop();
-        }
+        // if (minutes === 0 && seconds === 0) {
+        //     stop();
+        // }
 
         return minutes + ":" + seconds;
     }
@@ -142,11 +149,15 @@ $(document).ready(function () {
 
         if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
             console.log("This is the correct answer");
+            game.correctAnswers++;
+        } else {
+            console.log("this is the wrong answer");
+            game.incorrectAnswers++;
+            setTimeout(game.incorrectFeedback(), 3000);
+            game.assignDOMData();
+            // currentQuestion++;
         }
 
     });
 
-    // $("div.btn").on("click", (event) => {
-    //     console.log("button clicked");
-    // });
 });

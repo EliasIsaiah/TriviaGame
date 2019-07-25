@@ -2,3 +2,8 @@ div.currentQuestion {
     background: black;
     color: white;
 }
+
+div.correctAnswers, div.incorrectAnswers {
+    background: black;
+    color: white;
+}
