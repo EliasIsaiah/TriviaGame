@@ -1,4 +1,3 @@
-//trivia
 $(document).ready(function () {
 
     let triviaData;
