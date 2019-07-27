@@ -126,10 +126,6 @@ $(document).ready(function () {
             minutes = "0" + minutes;
         }
 
-        // if (minutes === 0 && seconds === 0) {
-        //     stop();
-        // }
-
         return minutes + ":" + seconds;
     }
 
