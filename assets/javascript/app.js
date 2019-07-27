@@ -9,7 +9,7 @@ $(document).ready(function () {
         triviaData = data.results;
         triviaLength = triviaData[currentQuestion].incorrect_answers.length + 1;
         console.log("success", data);
-        console.log(triviaData);
+        console.log();
     });
 
     const game = {
