@@ -164,22 +164,4 @@ $(document).ready(function () {
             setTimeout(game.assignDOMData, 3000);
         }
     });
-
-    // $("div.answers div").on("click", function (event) {
-    //     $this = $(this);
-    //     console.log($this);
-
-    //     if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
-    //         console.log("This is the correct answer");
-    //         game.correctAnswers++;
-    //     } else {
-    //         console.log("this is the wrong answer");
-    //         game.incorrectAnswers++;
-    //         setTimeout(game.incorrectFeedback(), 3000);
-    //         game.assignDOMData();
-    //         // currentQuestion++;
-    //     }
-
-    // });
-
 });
