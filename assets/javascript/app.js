@@ -1,7 +1,5 @@
-$(document).ready(fucntion() {
-
+$(document).ready(function() {
     let game = {
         
     }
-
 });
