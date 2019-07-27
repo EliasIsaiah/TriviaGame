@@ -1,4 +1,4 @@
-$(document).ready( fucntion() {
+$(document).ready(fucntion() {
 
     let game = {
         
