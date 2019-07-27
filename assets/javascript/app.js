@@ -16,6 +16,7 @@ $(document).ready(function () {
     const game = {
         correctAnswers: 0,
         incorrectAnswers: 0,
+        gameIsRunning: false,
 
         answersDOM: $("div.answers"),
         incorrectAnswersDOM: $("div.incorrectAnswers"),
@@ -29,28 +30,27 @@ $(document).ready(function () {
         buildanswerDOM: function () {
             if ($("div.answers div").length < 1) {
                 for (i = 0; i < triviaLength; i++) {
-                    // let imageUrl = "./assets/images/truffle" + i + ".png";
-                    // let answer = $("<div>");
-                    let answer = $("div.answer" + i);
+                    let imageUrl = "./assets/images/truffle" + i + ".png";
+                    let answer = $("<div>");
+                    // let answer = $("div.answer" + i);
                     answer
-                        // .attr("type", "button")
-                        // .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
-                        // .attr("value", i)
-                        // .css({
-                        //     'color': '#ffffff',
-                        //     'background': '#000000',
-                        // });
-                        // .css("display", "block");/
-                    // answer.text("Presss Start");
-                    // $("div.answers").append(answer);
+                        .attr("type", "button")
+                        .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
+                        .attr("value", i)
+                        .css({
+                            'color': '#ffffff',
+                            'background': '#000000',
+                            'display': "block",
+                        });
+                    answer.text("Presss Start");
+                    $("div.answers").append(answer);
                 }
             }
-
             this.assignDOMData();
         },
 
         assignDOMData: function () {
-            $question = $("div.currentQuestion");
+            $question = $("div.currentQuestion").empty();
 
             let currentAnswerSet = triviaData[currentQuestion].incorrect_answers;
 
@@ -74,6 +74,13 @@ $(document).ready(function () {
         incorrectFeedback: function () {
             this.timerDOM.text(`Incorrect Answer! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
+            this.incorrectAnswers++;
+        },
+
+        correctFeedback: function () {
+            this.timerDOM.text(`Correct Answer!`);
+            currentQuestion++;
+            this.correctAnswers++;
         }
     }
 
@@ -134,26 +141,45 @@ $(document).ready(function () {
         if (!timer.intervalId) {
             start();
         }
+        console.log("timer clicked!");
 
-        game.buildanswerDOM();
+        if (!game.gameIsRunning) {
+            game.buildanswerDOM();
+            game.gameIsRunning = true;
+        }
         // console.log("timer clicked!");
     })
 
-    $("div.answers div").on("click", function (event) {
-        $this = $(this);
+    $(document).on("click", "div.answers div", function (event) {
+        let $this = $(this);
+
         console.log($this);
 
-        if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
-            console.log("This is the correct answer");
-            game.correctAnswers++;
+        if ($this.attr("value") === triviaData[currentQuestion].correct_answer) {
+            game.correctFeedback();
+            setTimeout(game.assignDOMData, 3000);
         } else {
             console.log("this is the wrong answer");
-            game.incorrectAnswers++;
-            setTimeout(game.incorrectFeedback(), 3000);
-            game.assignDOMData();
-            // currentQuestion++;
+            game.incorrectFeedback()
+            setTimeout(game.assignDOMData, 3000);
         }
-
     });
+
+    // $("div.answers div").on("click", function (event) {
+    //     $this = $(this);
+    //     console.log($this);
+
+    //     if($this.attr("value") === triviaData[currentQuestion].correct_answer ) {
+    //         console.log("This is the correct answer");
+    //         game.correctAnswers++;
+    //     } else {
+    //         console.log("this is the wrong answer");
+    //         game.incorrectAnswers++;
+    //         setTimeout(game.incorrectFeedback(), 3000);
+    //         game.assignDOMData();
+    //         // currentQuestion++;
+    //     }
+
+    // });
 
 });
