@@ -33,4 +33,5 @@ You'll create a trivia game that shows only one question
 * all endgame content as currently the game just ends unceremenoniously once there are no more questions to be answered, with no feedback beyond the "current question" div being empty
 * The code needs some cleanup as there are some methods that have too much going on that should be broken up onto child methods or their functionaly should be absorbed into other existing methods as they are redundant.
 * Further Formatting of the game's frontend design as the current design is barebones bootstrap that has not been implemented or optimized very well.
+* Implement data validation on the data coming from the Trivia API to check for non-alphnumeric characters (Mostly for the "'" as currently it is not handled and it is bad-)
 
