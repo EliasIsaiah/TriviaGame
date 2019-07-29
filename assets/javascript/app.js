@@ -18,8 +18,8 @@ $(document).ready(function () {
         incorrectAnswers: 0,
         gameIsRunning: false,
 
-        answersDOM: $("div.answers"),
-        incorrectAnswersDOM: $("div.incorrectAnswers"),
+        answersDOM: $("div.answers p"),
+        incorrectAnswersDOM: $("div.incorrectAnswers p"),
         timerDOM: $("div.timer"),
 
 
@@ -75,12 +75,21 @@ $(document).ready(function () {
             this.timerDOM.text(`Incorrect Answer! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
             this.incorrectAnswers++;
+            this.incorrectAnswersDOM.text(`Incorrect Answers: ${this.incorrectAnswers}`);
         },
 
         correctFeedback: function () {
             this.timerDOM.text(`Correct Answer!`);
             currentQuestion++;
             this.correctAnswers++;
+            this.correctAnswersDOM.text(`Correct Answers: ${this.correctAnswers}`);
+        },
+
+        outOfTimeFeedback: function () {
+            this.timerDOM.text(`You Ran out of Time! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
+            currentQuestion++;
+            this.incorrectAnswers++;
+            this.incorrectAnswersDOM.text(`Correct Answers: ${this.incorrectAnswers}`);
         }
     }
 
@@ -94,9 +103,10 @@ $(document).ready(function () {
     let time = 5;
 
     function start() {
-        if (time <= 0) {
+        if (time < 1) {
             stop();
-            game.incorrectAnswers++;
+            // game.incorrectAnswers++;
+            game.outOfTimeFeedback();
             return;
         }
         count();
