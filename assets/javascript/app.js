@@ -89,7 +89,7 @@ $(document).ready(function () {
             this.timerDOM.text(`You Ran out of Time! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
             this.incorrectAnswers++;
-            this.incorrectAnswersDOM.text(`Correct Answers: ${this.incorrectAnswers}`);
+            this.incorrectAnswersDOM.text(`Incorrect Answers: ${this.incorrectAnswers}`);
         }
     }
 
