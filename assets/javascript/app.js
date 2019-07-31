@@ -1,25 +1,19 @@
 //trivia
 $(document).ready(function () {
 
+    const numQuestions = 10;
+    const gameTime = 20;
+
     let triviaData;
     let triviaLength;
     let currentQuestion = 0;
-    let currentAnswerSet;
-    const gameTime = 20;
-
-    $.getJSON("https://opentdb.com/api.php?amount=10&category=20&type=multiple", function (data) {
-        triviaData = data.results;
-        triviaLength = triviaData[currentQuestion].incorrect_answers.length + 1;
-        console.log("success", data);
-        console.log(triviaData);
-    });
+    let time = gameTime;
 
     const game = {
         correctAnswers: 0,
         incorrectAnswers: 0,
         gameIsRunning: false,
 
-        answersDOM: $("div.answers p"),
         incorrectAnswersDOM: $("div.incorrectAnswers p"),
         correctAnswersDOM: $("div.correctAnswers p"),
         timerDOM: $("div.timer"),
@@ -27,11 +21,20 @@ $(document).ready(function () {
 
         currentQuestionDOM: $("div.currentQuestion"),
 
+        startGame: function () {
+            start();
+            this.buildanswerDOM();
+        },
 
         buildanswerDOM: function () {
+
+            if (currentQuestion > (numQuestions - 1)) {
+                game.endGame();
+                console.log("game is ended");
+                return;
+            }
             if ($("div.answers div").length < 1) {
                 for (i = 0; i < triviaLength; i++) {
-                    let imageUrl = "./assets/images/truffle" + i + ".png";
                     let answer = $("<div>");
                     answer
                         .attr("type", "button")
@@ -41,7 +44,6 @@ $(document).ready(function () {
                             'background': '#000000',
                             'display': "block",
                         });
-                    answer.text("Press Start");
                     $("div.answers").append(answer);
                 }
             }
@@ -67,10 +69,8 @@ $(document).ready(function () {
 
             $question.text(triviaData[currentQuestion].question);
 
-            console.log(`currentQuestion is ${currentQuestion}`);
             if (currentQuestion > 0) { start(); };
         },
-
 
         incorrectFeedback: function () {
             this.timerDOM.text(`Incorrect Answer! The correct answer was: ${triviaData[currentQuestion].correct_answer}`);
@@ -94,6 +94,18 @@ $(document).ready(function () {
             this.incorrectAnswers++;
             this.incorrectAnswersDOM.text(`Incorrect Answers: ${this.incorrectAnswers}`);
             $("div.answers").empty();
+        },
+
+        endGame: function () {
+            this.gameIsRunning = false;
+            $("div.answers").empty();
+            this.currentQuestionDOM.empty();
+            currentQuestion = 0;
+            this.correctAnswers = 0;
+            this.incorrectAnswers = 0;
+            time = gameTime;
+            clearTimeout(timer.intervalId);
+            game.timerDOM.text("Click Here to Play Again");
         }
     }
 
@@ -104,15 +116,10 @@ $(document).ready(function () {
         intervalId: null,
     }
 
-    let time = gameTime;
-
     function start() {
+        console.log(`currentQuestion: ${currentQuestion}`);
+        console.log(`numQuestions: ${numQuestions}`);
 
-        if (currentQuestion >= 10) {
-            game.gameIsRunning = false;
-            stop();
-            return;
-        }
         if (time < 1) {
             console.log("reached stop if");
             stop();
@@ -159,16 +166,15 @@ $(document).ready(function () {
 
     $("div.timer").on("click", function (event) {
 
-        if (!timer.intervalId) {
-            start();
-        }
-        console.log("timer clicked!");
-
         if (!game.gameIsRunning) {
-            game.buildanswerDOM();
-            game.gameIsRunning = true;
+
+            $.getJSON(`https://opentdb.com/api.php?amount=${numQuestions}&category=20&type=multiple`, function () {
+            }).then((data) => {
+                triviaData = data.results;
+                triviaLength = triviaData[currentQuestion].incorrect_answers.length + 1;
+                game.startGame();
+            });
         }
-        // console.log("timer clicked!");
     })
 
     $(document).on("click", "div.answers div", function (event) {
@@ -189,3 +195,4 @@ $(document).ready(function () {
         }
     });
 });
+

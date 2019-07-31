@@ -7,3 +7,8 @@ div.correctAnswers, div.incorrectAnswers {
     background: black;
     color: white;
 }
+
+div.timer {
+    background: black;
+    color: white;
+}
