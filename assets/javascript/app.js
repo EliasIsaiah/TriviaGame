@@ -178,10 +178,12 @@ $(document).ready(function () {
 
         if ($this.attr("value") === triviaData[currentQuestion].correct_answer) {
             stop();
+            time = gameTime;
             game.correctFeedback();
             setTimeout(game.buildanswerDOM, 3000);
         } else {
             stop();
+            time = gameTime;
             game.incorrectFeedback();
             setTimeout(game.buildanswerDOM, 3000);
         }
