@@ -1,6 +1,6 @@
 # TriviaGame
 
-This Trivia Game is an exhibition of my ability to leverage timeouts and api get requests in JavaScript.
+This Trivia Game is an exhibition of my ability to use timeouts and api get requests in JavaScript.
 
 The intended gameplay is to be as follows: 
 
