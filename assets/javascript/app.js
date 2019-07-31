@@ -131,9 +131,7 @@ $(document).ready(function () {
     }
 
     let stop = function () {
-        // clearTimeout(timer.incrementor);
         clearTimeout(timer.intervalId);
-        // clockRunning = false;
     }
 
     let count = function () {
@@ -168,7 +166,6 @@ $(document).ready(function () {
             $.getJSON(`https://opentdb.com/api.php?amount=${numQuestions}&category=20&type=multiple`, function () {
             }).then((data) => {
                 triviaData = data.results;
-                console.log(triviaData);
                 triviaLength = triviaData[currentQuestion].incorrect_answers.length + 1;
                 game.startGame();
             });
