@@ -5,7 +5,7 @@ $(document).ready(function () {
     let triviaLength;
     let currentQuestion = 0;
     let currentAnswerSet;
-    const gameTime = 5;
+    const gameTime = 20;
 
     $.getJSON("https://opentdb.com/api.php?amount=10&category=20&type=multiple", function (data) {
         triviaData = data.results;
