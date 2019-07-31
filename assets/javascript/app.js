@@ -42,7 +42,6 @@ $(document).ready(function () {
                         .css({
                             'color': '#ffffff',
                             'background': 'rgba(0, 0, 0, .7)',
-                            // 'background': '#000000',
                             'display': "block",
                             'font-size': "2.5rem",
                         });
