@@ -1,14 +1,9 @@
-div.currentQuestion {
-    background: black;
+body {
+    background: url("../images/Contest_Venus_Hesperus_MAN_Napoli_Inv9449_n01.jpg") 0%;
     color: white;
+    font-size: 3rem;
 }
 
-div.correctAnswers, div.incorrectAnswers {
-    background: black;
-    color: white;
-}
-
-div.timer {
-    background: black;
-    color: white;
+div.currentQuestion, div.correctAnswers, div.incorrectAnswers, div.timer {
+    background: rgba(0, 0, 0, .5);
 }
