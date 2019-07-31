@@ -5,6 +5,7 @@ $(document).ready(function () {
     let triviaLength;
     let currentQuestion = 0;
     let currentAnswerSet;
+    const gameTime = 5;
 
     $.getJSON("https://opentdb.com/api.php?amount=10&category=20&type=multiple", function (data) {
         triviaData = data.results;
@@ -20,6 +21,7 @@ $(document).ready(function () {
 
         answersDOM: $("div.answers p"),
         incorrectAnswersDOM: $("div.incorrectAnswers p"),
+        correctAnswersDOM: $("div.correctAnswers p"),
         timerDOM: $("div.timer"),
 
 
@@ -32,21 +34,19 @@ $(document).ready(function () {
                 for (i = 0; i < triviaLength; i++) {
                     let imageUrl = "./assets/images/truffle" + i + ".png";
                     let answer = $("<div>");
-                    // let answer = $("div.answer" + i);
                     answer
                         .attr("type", "button")
                         .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
-                        .attr("value", i)
                         .css({
                             'color': '#ffffff',
                             'background': '#000000',
                             'display': "block",
                         });
-                    answer.text("Presss Start");
+                    answer.text("Press Start");
                     $("div.answers").append(answer);
                 }
             }
-            this.assignDOMData();
+            game.assignDOMData();
         },
 
         assignDOMData: function () {
@@ -56,11 +56,9 @@ $(document).ready(function () {
 
             currentAnswerSet.push(triviaData[currentQuestion].correct_answer);
 
-            console.log(`current answer set: ${currentAnswerSet}`);
-
             currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
-
-            console.log(currentAnswerSet);
+           
+            console.log(`current answer set: ${currentAnswerSet}`);
 
             for (let i = 0; i < triviaLength; i++) {
                 let $current = $("div.answer" + i);
@@ -71,11 +69,16 @@ $(document).ready(function () {
             $question.text(triviaData[currentQuestion].question);
         },
 
+        nextQuestion: function () {
+            this.buildanswerDOM();
+        },
+
         incorrectFeedback: function () {
-            this.timerDOM.text(`Incorrect Answer! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
+            this.timerDOM.text(`Incorrect Answer! The correct answer was: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
             this.incorrectAnswers++;
             this.incorrectAnswersDOM.text(`Incorrect Answers: ${this.incorrectAnswers}`);
+            $("div.answers").empty();
         },
 
         correctFeedback: function () {
@@ -83,13 +86,15 @@ $(document).ready(function () {
             currentQuestion++;
             this.correctAnswers++;
             this.correctAnswersDOM.text(`Correct Answers: ${this.correctAnswers}`);
+            $("div.answers").empty();
         },
 
         outOfTimeFeedback: function () {
-            this.timerDOM.text(`You Ran out of Time! The correct answer is: ${triviaData[currentQuestion].correct_answer}`);
+            this.timerDOM.text(`You Ran out of Time! The correct answer was: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
             this.incorrectAnswers++;
             this.incorrectAnswersDOM.text(`Incorrect Answers: ${this.incorrectAnswers}`);
+            $("div.answers").empty();
         }
     }
 
@@ -100,13 +105,13 @@ $(document).ready(function () {
         intervalId: null,
     }
 
-    let time = 5;
+    let time = gameTime;
 
     function start() {
         if (time < 1) {
             stop();
-            // game.incorrectAnswers++;
             game.outOfTimeFeedback();
+            game.buildanswerDOM();
             return;
         }
         count();
@@ -166,12 +171,13 @@ $(document).ready(function () {
         console.log($this);
 
         if ($this.attr("value") === triviaData[currentQuestion].correct_answer) {
+            stop();
             game.correctFeedback();
-            setTimeout(game.assignDOMData, 3000);
+            setTimeout(game.buildanswerDOM, 3000);
         } else {
-            console.log("this is the wrong answer");
-            game.incorrectFeedback()
-            setTimeout(game.assignDOMData, 3000);
+            stop();
+            game.incorrectFeedback();
+            setTimeout(game.buildanswerDOM, 3000);
         }
     });
 });
