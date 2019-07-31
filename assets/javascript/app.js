@@ -24,13 +24,13 @@ $(document).ready(function () {
         startGame: function () {
             start();
             this.buildanswerDOM();
+            game.gameIsRunning = true;
         },
 
         buildanswerDOM: function () {
 
             if (currentQuestion > (numQuestions - 1)) {
                 game.endGame();
-                console.log("game is ended");
                 return;
             }
             if ($("div.answers div").length < 1) {
@@ -59,7 +59,6 @@ $(document).ready(function () {
 
             currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
 
-            console.log(`current answer set: ${currentAnswerSet}`);
 
             for (let i = 0; i < triviaLength; i++) {
                 let $current = $("div.answer" + i);
@@ -117,11 +116,8 @@ $(document).ready(function () {
     }
 
     function start() {
-        console.log(`currentQuestion: ${currentQuestion}`);
-        console.log(`numQuestions: ${numQuestions}`);
 
         if (time < 1) {
-            console.log("reached stop if");
             stop();
             game.outOfTimeFeedback();
             time = gameTime;
@@ -130,7 +126,6 @@ $(document).ready(function () {
         }
         count();
         timer.intervalId = setTimeout(start, 1000);
-        console.log(time);
     }
 
     let stop = function () {
@@ -179,8 +174,6 @@ $(document).ready(function () {
 
     $(document).on("click", "div.answers div", function (event) {
         let $this = $(this);
-
-        console.log($this);
 
         if ($this.attr("value") === triviaData[currentQuestion].correct_answer) {
             stop();
