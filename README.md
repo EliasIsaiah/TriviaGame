@@ -23,10 +23,10 @@ The intended gameplay is to be as follows:
 
 
 ### TODO:
-* Implement "restart game" button upon game end for the player to restart the game without having to reload the screen
-* implement endgame behavior as currently the game just ends unceremenoniously once there are no more questions to be answered, with no feedback beyond the "current question" div being empty
+* ~~Implement "restart game" button upon game end for the player to restart the game without having to reload the screen~~
+* ~~implement endgame behavior as currently the game just ends unceremenoniously once there are no more questions to be answered, with no feedback beyond the "current question" div being empty~~
 * The code needs some cleanup as there are some methods that have too much going on that should be broken up onto child methods or their functionaly should be absorbed into other existing methods as they are redundant.
-* Further Formatting of the game's frontend design as the current design is barebones bootstrap that has not been implemented or optimized very well.
+* Further Formatting of the game's frontend design as the current design is barebones bootstrap
 * Implement data validation on the data coming from the Trivia API to check for non-alphnumeric characters (Mostly for the " ' " character as currently it is not handled.
 * ~~Implement the behavior of automatically moving the player to the next question after a few seconds after a timeout~~
 
