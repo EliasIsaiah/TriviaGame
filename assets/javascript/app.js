@@ -41,8 +41,10 @@ $(document).ready(function () {
                         .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
                         .css({
                             'color': '#ffffff',
-                            'background': '#000000',
+                            'background': 'rgba(0, 0, 0, .7)',
+                            // 'background': '#000000',
                             'display': "block",
+                            'font-size': "2.5rem",
                         });
                     $("div.answers").append(answer);
                 }
@@ -62,11 +64,11 @@ $(document).ready(function () {
 
             for (let i = 0; i < triviaLength; i++) {
                 let $current = $("div.answer" + i);
-                $current.text(currentAnswerSet[i]);
+                $current.html(currentAnswerSet[i]);
                 $current.attr("value", currentAnswerSet[i]);
             }
 
-            $question.text(triviaData[currentQuestion].question);
+            $question.html(triviaData[currentQuestion].question);
 
             if (currentQuestion > 0) { start(); };
         },
@@ -166,6 +168,7 @@ $(document).ready(function () {
             $.getJSON(`https://opentdb.com/api.php?amount=${numQuestions}&category=20&type=multiple`, function () {
             }).then((data) => {
                 triviaData = data.results;
+                console.log(triviaData);
                 triviaLength = triviaData[currentQuestion].incorrect_answers.length + 1;
                 game.startGame();
             });
