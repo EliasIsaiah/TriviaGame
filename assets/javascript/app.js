@@ -21,14 +21,9 @@ $(document).ready(function () {
 
         currentQuestionDOM: $("div.currentQuestion"),
 
-        startGame: function () {
-            start();
-            this.buildanswerDOM();
-            game.gameIsRunning = true;
-        },
-
+        
         buildanswerDOM: function () {
-
+            
             if (currentQuestion > (numQuestions - 1)) {
                 game.endGame();
                 return;
@@ -37,41 +32,47 @@ $(document).ready(function () {
                 for (i = 0; i < triviaLength; i++) {
                     let answer = $("<div>");
                     answer
-                        .attr("type", "button")
-                        .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
-                        .css({
-                            'color': '#ffffff',
-                            'background': 'rgba(0, 0, 0, .7)',
-                            'display': "block",
-                            'font-size': "2.5rem",
-                        });
+                    .attr("type", "button")
+                    .attr("class", "answer" + i + " btn btn-primary btn-lg btn-block p-2 m-1")
+                    .css({
+                        'color': '#ffffff',
+                        'background': 'rgba(0, 0, 0, .7)',
+                        'display': "block",
+                        'font-size': "2.5rem",
+                    });
                     $("div.answers").append(answer);
                 }
             }
             game.assignDOMData();
         },
-
+        
         assignDOMData: function () {
             $question = $("div.currentQuestion").empty();
-
+            
             let currentAnswerSet = triviaData[currentQuestion].incorrect_answers;
-
+            
             currentAnswerSet.push(triviaData[currentQuestion].correct_answer);
-
+            
             currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
-
-
+            
+            
             for (let i = 0; i < triviaLength; i++) {
                 let $current = $("div.answer" + i);
                 $current.html(currentAnswerSet[i]);
                 $current.attr("value", currentAnswerSet[i]);
             }
-
+            
             $question.html(triviaData[currentQuestion].question);
-
+            
             if (currentQuestion > 0) { start(); };
         },
-
+        
+        startGame: function () {
+            start();
+            this.buildanswerDOM();
+            game.gameIsRunning = true;
+        },
+        
         incorrectFeedback: function () {
             this.timerDOM.text(`Incorrect Answer! The correct answer was: ${triviaData[currentQuestion].correct_answer}`);
             currentQuestion++;
