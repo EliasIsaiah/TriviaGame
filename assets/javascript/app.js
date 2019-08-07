@@ -53,8 +53,7 @@ $(document).ready(function () {
             
             currentAnswerSet.push(triviaData[currentQuestion].correct_answer);
             
-            currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });
-            
+            currentAnswerSet = currentAnswerSet.sort(() => { return 0.5 - Math.random() });            
             
             for (let i = 0; i < triviaLength; i++) {
                 let $current = $("div.answer" + i);
@@ -173,7 +172,7 @@ $(document).ready(function () {
     })
 
     $(document).on("click", "div.answers div", function (event) {
-        let $this = $(this);
+        const $this = $(this);
 
         if ($this.attr("value") === triviaData[currentQuestion].correct_answer) {
             stop();
