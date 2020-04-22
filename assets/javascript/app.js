@@ -69,7 +69,7 @@ $(document).ready(function () {
         startGame: function () {
             start();
             this.buildanswerDOM();
-            game.gameIsRunning = true;
+            this.gameIsRunning = true;
         },
         
         incorrectFeedback: function () {
