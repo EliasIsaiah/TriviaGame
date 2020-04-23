@@ -105,7 +105,7 @@ $(document).ready(function () {
             this.incorrectAnswers = 0;
             time = gameTime;
             clearTimeout(timer.intervalId);
-            game.timerDOM.text("Click Here to Play Again");
+            this.timerDOM.text("Click Here to Play Again");
         }
     }
 
